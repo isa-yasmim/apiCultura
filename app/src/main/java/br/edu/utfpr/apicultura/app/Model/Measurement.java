@@ -5,7 +5,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name= "TB_Measurement")
-public class Measurement {
+public class Measurement extends BaseEntity {
 
     /*@Id
     private UUID id = UUID.randomUUID();
