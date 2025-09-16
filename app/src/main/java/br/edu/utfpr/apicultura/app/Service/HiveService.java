@@ -4,8 +4,11 @@ import br.edu.utfpr.apicultura.app.DTO.HiveDTO;
 import br.edu.utfpr.apicultura.app.Model.Device;
 import br.edu.utfpr.apicultura.app.Model.Hive;
 import br.edu.utfpr.apicultura.app.Model.Property;
+import br.edu.utfpr.apicultura.app.Repository.DeviceRepository;
 import br.edu.utfpr.apicultura.app.Repository.HiveRepository;
+import br.edu.utfpr.apicultura.app.Repository.PropertyRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class HiveService {
 
     private final HiveRepository hiveRepository;
+    private final PropertyRepository propertyRepository; 
+    private final DeviceRepository deviceRepository;  
 
     // Listagem paginada
     public Page<HiveDTO> findAll(Pageable pageable) {
@@ -30,9 +35,33 @@ public class HiveService {
     }
 
     // Criar
-    public HiveDTO create(HiveDTO dto) {
-        Hive hive = toEntity(dto);
-        return toDTO(hiveRepository.save(hive));
+    @Transactional 
+    public HiveDTO create(HiveDTO dto) {        Hive hive = new Hive();
+        hive.setBeeSpecies(dto.beeSpecies());
+        hive.setLastHarvest(dto.lastHarvest());
+        hive.setInstallationDate(dto.installationDate());
+        hive.setStatus(dto.status());
+        hive.setNickname(dto.nickname());
+        hive.setPopulation(dto.population());
+        hive.setProduction(dto.production());
+        hive.setCoordinates(dto.coordinates());
+        hive.setInspectionNote(dto.inspectionNote());
+
+        if (dto.propertyId() != null) {
+            Property property = propertyRepository.findById(dto.propertyId())
+                    .orElseThrow(() -> new EntityNotFoundException("Propriedade não encontrada com o ID: " + dto.propertyId()));
+            hive.setProperty(property);
+        }
+
+        if (dto.deviceId() != null) {
+            Device device = deviceRepository.findById(dto.deviceId())
+                    .orElseThrow(() -> new EntityNotFoundException("Dispositivo não encontrado com o ID: " + dto.deviceId()));
+            hive.setDevice(device);
+        }
+        
+        Hive savedHive = hiveRepository.save(hive);
+        
+        return toDTO(savedHive);
     }
 
     // Atualizar
@@ -50,7 +79,6 @@ public class HiveService {
         hive.setCoordinates(dto.coordinates());
         hive.setInspectionNote(dto.inspectionNote());
 
-        // Apenas setar IDs, você pode expandir para buscar entidades reais se necessário
         if (dto.propertyId() != null) {
             Property p = new Property();
             p.setId(dto.propertyId());

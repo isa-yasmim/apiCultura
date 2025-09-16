@@ -22,7 +22,7 @@ Accept: application/json
   "coordinates": "-25.4284,-49.2733",
   "inspectionNote": 9,
   "propertyId": 1,
-  "deviceId": 3
+  "deviceId": 1
 }
 
 ### Atualizar colmeia existente
