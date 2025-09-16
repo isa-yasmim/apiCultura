@@ -1,4 +1,4 @@
-package br.edu.utfpr.apicultura.app.DTO;
+package br.edu.utfpr.apicultura.app.dto;
 
 public record HiveDTO() {
 
