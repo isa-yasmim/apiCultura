@@ -20,13 +20,13 @@ Accept: application/json
   "version": "1.0",
   "batteryStatus": 85,
   "powerSource": "Solar",
-  "status": "ACTIVE"
+  "status": "ONLINE"
 }
 
 ###
 
 ### Atualizar um dispositivo existente
-PUT http://localhost:8080/devices/1
+PUT http://localhost:8080/devices/3
 Content-Type: application/json
 Accept: application/json
 
@@ -35,11 +35,11 @@ Accept: application/json
   "version": "1.1",
   "batteryStatus": 90,
   "powerSource": "Bateria",
-  "status": "INACTIVE"
+  "status": "OFFLINE"
 }
 
 ###
 
 ### Deletar um dispositivo
-DELETE http://localhost:8080/devices/1
+DELETE http://localhost:8080/devices/2
 Accept: application/json

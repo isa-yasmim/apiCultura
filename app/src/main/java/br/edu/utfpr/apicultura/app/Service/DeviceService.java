@@ -49,7 +49,8 @@ public class DeviceService {
     public DeviceDTO update(Long id, DeviceDTO deviceDTO) {
         // Busca o dispositivo no banco. Se não existir, lança a exceção.
         Device existingDevice = deviceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não é possível atualizar. Dispositivo não encontrado com o ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Não é possível atualizar. Dispositivo não encontrado com o ID: " + id));
 
         // Atualiza os campos do objeto encontrado com os dados do DTO
         existingDevice.setModel(deviceDTO.getModel());
@@ -57,7 +58,7 @@ public class DeviceService {
         existingDevice.setBatteryStatus(deviceDTO.getBatteryStatus());
         existingDevice.setPowerSource(deviceDTO.getPowerSource());
         existingDevice.setStatus(deviceDTO.getStatus());
-        
+
         Device updatedDevice = deviceRepository.save(existingDevice);
         return toDTO(updatedDevice);
     }
@@ -73,6 +74,17 @@ public class DeviceService {
 
     // Métodos auxiliares de Mapeamento DTO <-> Entity
 
+    private DeviceDTO toDTO(Device entity) {
+        DeviceDTO dto = new DeviceDTO();
+        dto.setId(entity.getId());
+        dto.setModel(entity.getModel());
+        dto.setVersion(entity.getVersion());
+        dto.setBatteryStatus(entity.getBatteryStatus());
+        dto.setPowerSource(entity.getPowerSource());
+        dto.setStatus(entity.getStatus());
+        return dto;
+    }
+
     private Device toEntity(DeviceDTO dto) {
         Device entity = new Device();
         entity.setModel(dto.getModel());
@@ -81,15 +93,5 @@ public class DeviceService {
         entity.setPowerSource(dto.getPowerSource());
         entity.setStatus(dto.getStatus());
         return entity;
-    }
-
-    private DeviceDTO toDTO(Device entity) {
-        DeviceDTO dto = new DeviceDTO();
-        dto.setModel(entity.getModel());
-        dto.setVersion(entity.getVersion());
-        dto.setBatteryStatus(entity.getBatteryStatus());
-        dto.setPowerSource(entity.getPowerSource());
-        dto.setStatus(entity.getStatus());
-        return dto;
     }
 }
