@@ -15,14 +15,14 @@ Accept: application/json
   "beeSpecies": "Apis mellifera",
   "lastHarvest": "2025-09-01",
   "installationDate": "2025-06-10",
-  "status": "ACTIVE",
+  "status": "HEALTHY",
   "nickname": "Colmeia Azul",
   "population": 12000,
   "production": 15.7,
   "coordinates": "-25.4284,-49.2733",
   "inspectionNote": 9,
   "propertyId": 1,
-  "deviceId": 2
+  "deviceId": 3
 }
 
 ### Atualizar colmeia existente
