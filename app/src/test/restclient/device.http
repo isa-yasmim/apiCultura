@@ -1,0 +1,45 @@
+### Listar todos os dispositivos (paginação)
+GET http://localhost:8080/devices?page=0&size=5
+Accept: application/json
+
+###
+
+### Buscar um dispositivo por ID
+GET http://localhost:8080/devices/1
+Accept: application/json
+
+###
+
+### Criar um novo dispositivo
+POST http://localhost:8080/devices
+Content-Type: application/json
+Accept: application/json
+
+{
+  "model": "Device Pro Max",
+  "version": "1.0",
+  "batteryStatus": 85,
+  "powerSource": "Solar",
+  "status": "ACTIVE"
+}
+
+###
+
+### Atualizar um dispositivo existente
+PUT http://localhost:8080/devices/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "model": "Device Pro Max 2",
+  "version": "1.1",
+  "batteryStatus": 90,
+  "powerSource": "Bateria",
+  "status": "INACTIVE"
+}
+
+###
+
+### Deletar um dispositivo
+DELETE http://localhost:8080/devices/1
+Accept: application/json
