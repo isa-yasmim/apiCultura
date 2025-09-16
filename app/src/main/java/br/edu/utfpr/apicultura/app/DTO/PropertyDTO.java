@@ -1,4 +1,4 @@
-package br.edu.utfpr.apicultura.app.dto;
+package br.edu.utfpr.apicultura.app.DTO;
 
 import java.util.List;
 
