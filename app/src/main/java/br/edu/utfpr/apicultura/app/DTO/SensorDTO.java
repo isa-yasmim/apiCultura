@@ -5,10 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
 import java.time.LocalDate;
 
 @Data
 public class SensorDTO {
+
+    private Long id;
 
     @NotBlank(message = "O tipo do sensor não pode ser nulo ou vazio.")
     @Size(max = 50, message = "O tipo do sensor deve ter no máximo 50 caracteres.")
@@ -27,4 +30,7 @@ public class SensorDTO {
     private Double maxLimit;
 
     private LocalDate installationDate;
+
+    @NotNull(message = "O deviceId é obrigatório.")
+    private Long deviceId;
 }
