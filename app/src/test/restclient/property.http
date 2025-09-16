@@ -1,0 +1,35 @@
+### Listar todas as propriedades
+GET http://localhost:8080/api/properties
+Accept: application/json
+
+### Buscar propriedade por ID
+GET http://localhost:8080/api/properties/1
+Accept: application/json
+
+### Criar nova propriedade
+POST http://localhost:8080/api/properties
+Content-Type: application/json
+Accept: application/json
+
+{
+  "address": "Rua das Abelhas",
+  "number": "123",
+  "name": "Apiário Central",
+  "description": "Propriedade principal com 10 colmeias ativas"
+}
+
+### Atualizar propriedade existente
+PUT http://localhost:8080/api/properties/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "address": "Avenida do Mel",
+  "number": "456",
+  "name": "Apiário Central Atualizado",
+  "description": "Propriedade principal renovada com 12 colmeias ativas"
+}
+
+### Deletar propriedade
+DELETE http://localhost:8080/api/properties/1
+Accept: application/json
