@@ -1,0 +1,43 @@
+### Listar todos os sensores (paginado)
+GET http://localhost:8080/sensors?page=0&size=5
+Accept: application/json
+
+### Buscar sensor por ID
+GET http://localhost:8080/sensors/2
+Accept: application/json
+
+### Criar novo sensor
+POST http://localhost:8080/sensors
+Content-Type: application/json
+Accept: application/json
+
+{
+  "type": "TEMPERATURA",
+  "measurementUnit": "°C",
+  "lastValue": 25.5,
+  "status": "ACTIVE",
+  "minLimit": 15.0,
+  "maxLimit": 40.0,
+  "installationDate": "2025-09-17",
+  "deviceId": 1
+}
+
+### Atualizar sensor existente
+PUT http://localhost:8080/sensors/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "type": "UMIDADE",
+  "measurementUnit": "%",
+  "lastValue": 65.2,
+  "status": "ERROR",
+  "minLimit": 20.0,
+  "maxLimit": 80.0,
+  "installationDate": "2025-09-17",
+  "deviceId": 1
+}
+
+### Deletar sensor
+DELETE http://localhost:8080/sensors/3
+Accept: application/json
