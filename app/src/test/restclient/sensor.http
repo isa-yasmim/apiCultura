@@ -39,5 +39,5 @@ Accept: application/json
 }
 
 ### Deletar sensor
-DELETE http://localhost:8080/sensors/3
+DELETE http://localhost:8080/sensors/1
 Accept: application/json
