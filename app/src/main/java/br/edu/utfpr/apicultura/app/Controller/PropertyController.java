@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.utfpr.apicultura.app.DTO.PropertyDTO;
 import br.edu.utfpr.apicultura.app.Service.PropertyService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -37,13 +38,13 @@ public class PropertyController {
     }
 
     @PostMapping
-    public ResponseEntity<PropertyDTO> createProperty(@RequestBody PropertyDTO propertyDTO) {
+    public ResponseEntity<PropertyDTO> createProperty(@Valid @RequestBody PropertyDTO propertyDTO) {
         PropertyDTO createdProperty = propertyService.create(propertyDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProperty);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PropertyDTO> updateProperty(
+    public ResponseEntity<PropertyDTO> updateProperty( @Valid
             @PathVariable Long id, 
             @RequestBody PropertyDTO propertyDTO) {
         PropertyDTO updatedProperty = propertyService.update(id, propertyDTO);

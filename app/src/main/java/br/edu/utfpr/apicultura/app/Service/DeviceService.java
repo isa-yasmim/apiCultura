@@ -9,17 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import br.edu.utfpr.apicultura.app.DTO.DeviceDTO;
 import br.edu.utfpr.apicultura.app.Model.Device;
 import br.edu.utfpr.apicultura.app.Repository.DeviceRepository;
+import lombok.AllArgsConstructor;
 import br.edu.utfpr.apicultura.app.Exception.ResourceNotFoundException;
 
 @Service
+@AllArgsConstructor
 public class DeviceService {
-
     private final DeviceRepository deviceRepository;
-
-    @Autowired
-    public DeviceService(DeviceRepository deviceRepository) {
-        this.deviceRepository = deviceRepository;
-    }
 
     // Método para listagem paginada de todos os devices
     @Transactional(readOnly = true)

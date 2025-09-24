@@ -43,10 +43,10 @@ public class PropertyService {
         Property existingProperty = propertyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Property not found with id: " + id));
 
-        existingProperty.setAddress(propertyDTO.address());
-        existingProperty.setNumber(propertyDTO.number());
-        existingProperty.setName(propertyDTO.name());
-        existingProperty.setDescription(propertyDTO.description());
+        existingProperty.setAddress(propertyDTO.getAddress());
+        existingProperty.setNumber(propertyDTO.getNumber());
+        existingProperty.setName(propertyDTO.getName());
+        existingProperty.setDescription(propertyDTO.getDescription());
 
         Property updatedProperty = propertyRepository.save(existingProperty);
         return convertToDTO(updatedProperty);
@@ -60,21 +60,21 @@ public class PropertyService {
     }
 
     private PropertyDTO convertToDTO(Property property) {
-        return new PropertyDTO(
-                property.getAddress(),
-                property.getNumber(),
-                property.getName(),
-                property.getDescription(),
-                null // hives
-        );
+        PropertyDTO propertyDTO = new PropertyDTO();
+        propertyDTO.setAddress(property.getAddress());
+        propertyDTO.setNumber(property.getNumber());
+        propertyDTO.setName(property.getName());
+        propertyDTO.setDescription(property.getDescription());
+        // Note: hives list is not being set here as it might require additional logic
+        return propertyDTO;
     }
 
     private Property convertToEntity(PropertyDTO propertyDTO) {
         Property property = new Property();
-        property.setAddress(propertyDTO.address());
-        property.setNumber(propertyDTO.number());
-        property.setName(propertyDTO.name());
-        property.setDescription(propertyDTO.description());
+        property.setAddress(propertyDTO.getAddress());
+        property.setNumber(propertyDTO.getNumber());
+        property.setName(propertyDTO.getName());
+        property.setDescription(propertyDTO.getDescription());
         return property;
     }
 }

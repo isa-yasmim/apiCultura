@@ -3,7 +3,7 @@ GET http://localhost:8080/api/properties
 Accept: application/json
 
 ### Buscar propriedade por ID
-GET http://localhost:8080/api/properties/1
+GET http://localhost:8080/api/properties/3
 Accept: application/json
 
 ### Criar nova propriedade
@@ -33,3 +33,37 @@ Accept: application/json
 ### Deletar propriedade
 DELETE http://localhost:8080/api/properties/1
 Accept: application/json
+
+### Criar nova propriedade com erro
+POST http://localhost:8080/api/properties
+Content-Type: application/json
+Accept: application/json
+
+{
+  "address": "Rua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das Abelhas",
+  "number": "",
+  "name": "",
+  "description": "Propriedade principal com 10 colmeias ativas"
+}
+
+### Criar nova propriedade com erro
+POST http://localhost:8080/api/properties
+Content-Type: application/json
+Accept: application/json
+
+{
+  "address": "Rua das Abelhas",
+  "name": "Apiário Central",
+  "description": "Propriedade principal com 10 colmeias ativas"
+}
+
+### Atualizar propriedade existente com erro
+PUT http://localhost:8080/api/properties/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "address": "Avenida do Mel",
+  "name": "Apiário Central Atualizado",
+  "description": "Propriedade principal renovada com 12 colmeias ativas"
+}
