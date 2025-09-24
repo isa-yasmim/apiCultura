@@ -1,0 +1,25 @@
+@URL=http://localhost:8080/auth
+
+@token=eyJraWQiOiJrK0ZvQ0FjOGVOSlNidXFNcUY3MHh4Mko0VHR2Y1d5bHpua1hLWnpBSXM0PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMTNiYjU4MC0xMGIxLTcwZDUtODExZC0xNWFmNWI0M2M1YTMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0yLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMl9Gd0ZPTEdRR3YiLCJjbGllbnRfaWQiOiJjZmtscjVqM2plaG91cWRsMjZqaWJmNGlzIiwib3JpZ2luX2p0aSI6IjBkMzQ5M2Y1LTcyMjMtNGQzYy05N2FjLTY0YzgwYzQyODczNiIsImV2ZW50X2lkIjoiZTQzZmE0MzMtZjMxNC00NmU0LTg2MDItNjExYjNmMGNmNWNkIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTc1ODczNjI5MSwiZXhwIjoxNzU4NzM5ODkxLCJpYXQiOjE3NTg3MzYyOTIsImp0aSI6ImY3ZTg3NzY2LTQwZTMtNDkwYS04YzAxLWVhODQ1MTExYzZlNyIsInVzZXJuYW1lIjoiZTEzYmI1ODAtMTBiMS03MGQ1LTgxMWQtMTVhZjViNDNjNWEzIn0.Ik27cvFmW1gbQOKSi1aWs5nLD7igf2bZKDWfRmbhtlVTiLGfdMvddL2t2lMylBJ6cCKPQWCpFJ1tIBlgzkZnG3zkZ7F00LpaE84PpzgtYfEt9WOiiRJwEnFOazM7AGdoXvZQsZGZf3SiusPbLZh0RLgD6nlaP5h16nOKb93-nWxt8_Dvl8WUxaDhNOJUm6HOXtGVWx5E9FzCjlboPZimtcSZSZBQ8LX_ydU14OH4-tpLSIU1DJHrde6eBLaB622rrpjzuvR0fKAFDNozs5TqmUanffYgOOZTq2_yYPtTHo8taJcNu1nQnz5MALHk_CkxiMxNPxt7tCYL3NlSN36mNA
+
+### Validate
+POST {{URL}}/validate HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Auth with secret
+POST {{URL}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "osvaldo.beltrame.neto@gmail.com",
+    "password": "Sobjak22*"
+}
+
+### Refresh token
+POST {{URL}}/refresh HTTP/1.1
+Content-Type: application/json
+
+{
+    "refreshToken": "xxx"
+}
