@@ -1,5 +1,10 @@
 package br.edu.utfpr.apicultura.app.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.edu.utfpr.apicultura.app.DTO.HiveDTO;
 import br.edu.utfpr.apicultura.app.Model.Device;
 import br.edu.utfpr.apicultura.app.Model.Hive;
@@ -8,11 +13,7 @@ import br.edu.utfpr.apicultura.app.Repository.DeviceRepository;
 import br.edu.utfpr.apicultura.app.Repository.HiveRepository;
 import br.edu.utfpr.apicultura.app.Repository.PropertyRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
