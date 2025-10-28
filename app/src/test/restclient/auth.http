@@ -1,53 +1,25 @@
+@URL=http://localhost:8080/auth
 
 @token=eyJraWQiOiJrK0ZvQ0FjOGVOSlNidXFNcUY3MHh4Mko0VHR2Y1d5bHpua1hLWnpBSXM0PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMTZiMjUyMC04MGUxLTcwYmMtZDViMC0wZmQ5ZWM5ZmZiMDYiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0yLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMl9Gd0ZPTEdRR3YiLCJjbGllbnRfaWQiOiJjZmtscjVqM2plaG91cWRsMjZqaWJmNGlzIiwib3JpZ2luX2p0aSI6IjhmMmVhM2RkLTNmOWUtNDYzNC04Mjg4LWUyZDNhNmNjMjVmMiIsImV2ZW50X2lkIjoiNTgzNTVkZDEtYjEzNy00YmQxLTgyMmYtNjY0YTE2NmIxNzFkIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTc1ODczNzkyMSwiZXhwIjoxNzU4NzQxNTIxLCJpYXQiOjE3NTg3Mzc5MjEsImp0aSI6ImY2NjE1NzI5LTcxMDAtNGY3My1iMDQ5LWQyYjJhN2E0MDVlZSIsInVzZXJuYW1lIjoiZTE2YjI1MjAtODBlMS03MGJjLWQ1YjAtMGZkOWVjOWZmYjA2In0.PEc5MMgY3fkmC2B4F6t1WdknL4i7ZA95TH3J5XrtG6_OvehXf3FTXxz-KNHOKLaV27HP65neLMYbbmXULEfYLfHf1EGj5RRyQPcSxT4MYAuyrHknrYF6F062dL4Aj3IgPqjKpkMqq6_9zU1rihZ41DrtVaeeT6yXLWoY7EJV9cU1ZePfn8aqm2RuHSQFKobXwyJwYOrEEcSTYLxZHc4p_XHxyHng3VEHX39bfDcIUirvy2KsD8ICS0XCFzoem8WalbSeCKw_oY-HOA4GPROWleN0c28U6O8r_kMoQkAo4fahLTIF1vIRHaTubqsQrHTucZY3nexUcV2MVi1d6qMJMg
 
-### Listar todos os dispositivos (paginação)
-GET http://localhost:8080/devices?page=0&size=5
-Accept: application/json
+### Validate
+POST {{URL}}/validate HTTP/1.1
 Authorization: Bearer {{token}}
 
-###
 
-### Buscar um dispositivo por ID
-GET http://localhost:8080/devices/1
-Authorization: Bearer {{token}}
-Accept: application/json
-
-###
-
-### Criar um novo dispositivo
-POST http://localhost:8080/devices
+### Auth with secret
+POST {{URL}}/login HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {{token}}
-Accept: application/json
 
 {
-  "model": "Device Pro Max",
-  "version": "1.0",
-  "batteryStatus": 85,
-  "powerSource": "Solar",
-  "status": "ONLINE"
+    "username": "osvaldo.beltrame.neto@gmail.com",
+    "password": "Sobjak22*"
 }
 
-###
-
-### Atualizar um dispositivo existente
-PUT http://localhost:8080/devices/3
+### Refresh token
+POST {{URL}}/refresh HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {{token}}
-Accept: application/json
 
 {
-  "model": "Device Pro Max 2",
-  "version": "1.1",
-  "batteryStatus": 90,
-  "powerSource": "Bateria",
-  "status": "OFFLINE"
+    "refreshToken": "xxx"
 }
-
-###
-
-### Deletar um dispositivo
-DELETE http://localhost:8080/devices/1
-Authorization: Bearer {{token}}
-Accept: application/json

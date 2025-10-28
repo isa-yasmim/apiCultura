@@ -1,15 +1,21 @@
+@token=eyJraWQiOiJrK0ZvQ0FjOGVOSlNidXFNcUY3MHh4Mko0VHR2Y1d5bHpua1hLWnpBSXM0PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlMTZiMjUyMC04MGUxLTcwYmMtZDViMC0wZmQ5ZWM5ZmZiMDYiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0yLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMl9Gd0ZPTEdRR3YiLCJjbGllbnRfaWQiOiJjZmtscjVqM2plaG91cWRsMjZqaWJmNGlzIiwib3JpZ2luX2p0aSI6IjhmMmVhM2RkLTNmOWUtNDYzNC04Mjg4LWUyZDNhNmNjMjVmMiIsImV2ZW50X2lkIjoiNTgzNTVkZDEtYjEzNy00YmQxLTgyMmYtNjY0YTE2NmIxNzFkIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTc1ODczNzkyMSwiZXhwIjoxNzU4NzQxNTIxLCJpYXQiOjE3NTg3Mzc5MjEsImp0aSI6ImY2NjE1NzI5LTcxMDAtNGY3My1iMDQ5LWQyYjJhN2E0MDVlZSIsInVzZXJuYW1lIjoiZTE2YjI1MjAtODBlMS03MGJjLWQ1YjAtMGZkOWVjOWZmYjA2In0.PEc5MMgY3fkmC2B4F6t1WdknL4i7ZA95TH3J5XrtG6_OvehXf3FTXxz-KNHOKLaV27HP65neLMYbbmXULEfYLfHf1EGj5RRyQPcSxT4MYAuyrHknrYF6F062dL4Aj3IgPqjKpkMqq6_9zU1rihZ41DrtVaeeT6yXLWoY7EJV9cU1ZePfn8aqm2RuHSQFKobXwyJwYOrEEcSTYLxZHc4p_XHxyHng3VEHX39bfDcIUirvy2KsD8ICS0XCFzoem8WalbSeCKw_oY-HOA4GPROWleN0c28U6O8r_kMoQkAo4fahLTIF1vIRHaTubqsQrHTucZY3nexUcV2MVi1d6qMJMg
+
+
 ### Listar todas as propriedades
 GET http://localhost:8080/api/properties
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ### Buscar propriedade por ID
 GET http://localhost:8080/api/properties/3
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ### Criar nova propriedade
 POST http://localhost:8080/api/properties
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{token}}
 
 {
   "address": "Rua das Abelhas",
@@ -22,6 +28,7 @@ Accept: application/json
 PUT http://localhost:8080/api/properties/1
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{token}}
 
 {
   "address": "Avenida do Mel",
@@ -33,37 +40,4 @@ Accept: application/json
 ### Deletar propriedade
 DELETE http://localhost:8080/api/properties/1
 Accept: application/json
-
-### Criar nova propriedade com erro
-POST http://localhost:8080/api/properties
-Content-Type: application/json
-Accept: application/json
-
-{
-  "address": "Rua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das AbelhasRua das Abelhas",
-  "number": "",
-  "name": "",
-  "description": "Propriedade principal com 10 colmeias ativas"
-}
-
-### Criar nova propriedade com erro
-POST http://localhost:8080/api/properties
-Content-Type: application/json
-Accept: application/json
-
-{
-  "address": "Rua das Abelhas",
-  "name": "Apiário Central",
-  "description": "Propriedade principal com 10 colmeias ativas"
-}
-
-### Atualizar propriedade existente com erro
-PUT http://localhost:8080/api/properties/1
-Content-Type: application/json
-Accept: application/json
-
-{
-  "address": "Avenida do Mel",
-  "name": "Apiário Central Atualizado",
-  "description": "Propriedade principal renovada com 12 colmeias ativas"
-}
+Authorization: Bearer {{token}}
