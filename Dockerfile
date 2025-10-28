@@ -1,25 +1,24 @@
-# Etapa 1 - Build da aplicação com Maven
+# Etapa 1: Build da aplicação
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-WORKDIR /app
+WORKDIR /build
 
-# Copia os arquivos de definição
-COPY pom.xml .
-COPY src ./src
+# Copia apenas a pasta app do repositório (onde está o pom.xml)
+COPY app /build
 
-# Executa o build do projeto
-RUN mvn clean package -DskipTests
+# Executa o build do projeto dentro da pasta app
+WORKDIR /build
+RUN mvn -f pom.xml clean package -DskipTests
 
-# Etapa 2 - Executa a aplicação
+# Etapa 2: Executa a aplicação
 FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
-# Copia o JAR gerado do build anterior
-COPY --from=build /app/target/*.jar app.jar
+# Copia o JAR gerado da etapa anterior
+COPY --from=build /build/target/*.jar app.jar
 
-# Expõe a porta do Spring Boot
+# Expõe a porta padrão do Spring Boot
 EXPOSE 8080
 
-# Comando de inicialização
 ENTRYPOINT ["java", "-jar", "app.jar"]
