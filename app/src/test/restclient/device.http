@@ -6,6 +6,7 @@ GET http://localhost:8080/devices?page=0&size=5
 Accept: application/json
 Authorization: Bearer {{token}}
 
+GET 
 ###
 
 ### Buscar um dispositivo por ID
@@ -16,7 +17,7 @@ Accept: application/json
 ###
 
 ### Criar um novo dispositivo
-POST http://localhost:8080/devices
+POST http://192.168.30.66/api/postgres/devices
 Content-Type: application/json
 Authorization: Bearer {{token}}
 Accept: application/json

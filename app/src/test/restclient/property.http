@@ -12,7 +12,7 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### Criar nova propriedade
-POST http://localhost:8080/api/properties
+POST http://192.168.30.66/api/postgres/api/properties
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{token}}
