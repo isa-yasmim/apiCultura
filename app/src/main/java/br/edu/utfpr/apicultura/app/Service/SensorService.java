@@ -1,20 +1,39 @@
 package br.edu.utfpr.apicultura.app.Service;
 
+import br.edu.utfpr.apicultura.app.DTO.SensorAlertDTO;
 import br.edu.utfpr.apicultura.app.DTO.SensorDTO;
 import br.edu.utfpr.apicultura.app.Model.Device;
 import br.edu.utfpr.apicultura.app.Model.Sensor;
 import br.edu.utfpr.apicultura.app.Repository.SensorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class SensorService {
 
     private final SensorRepository sensorRepository;
+
+    // --- ADIÇÕES RABBITMQ ---
+
+    // Injeta o template do RabbitMQ
+    private final RabbitTemplate rabbitTemplate;
+
+    // Injeta os nomes definidos no application.properties
+    @Value("${rabbitmq.exchange.name}")
+    private String exchangeName;
+
+    @Value("${rabbitmq.routing.key}")
+    private String routingKey;
+
+    // --- FIM ADIÇÕES RABBITMQ ---
 
     // Listagem paginada
     public Page<SensorDTO> findAll(Pageable pageable) {
@@ -31,7 +50,12 @@ public class SensorService {
     // Criar
     public SensorDTO create(SensorDTO dto) {
         Sensor sensor = toEntity(dto);
-        return toDTO(sensorRepository.save(sensor));
+        Sensor savedSensor = sensorRepository.save(sensor); // Salva primeiro
+
+        // ** ADIÇÃO: Verifica os limites após criar **
+        checkAndSendAlerts(savedSensor);
+
+        return toDTO(savedSensor); // Retorna o DTO do sensor salvo
     }
 
     // Atualizar
@@ -53,7 +77,12 @@ public class SensorService {
             sensor.setDevice(device);
         }
 
-        return toDTO(sensorRepository.save(sensor));
+        Sensor updatedSensor = sensorRepository.save(sensor); // Salva as atualizações
+
+        // ** ADIÇÃO: Verifica os limites após atualizar **
+        checkAndSendAlerts(updatedSensor);
+
+        return toDTO(updatedSensor); // Retorna o DTO do sensor atualizado
     }
 
     // Deletar
@@ -63,6 +92,54 @@ public class SensorService {
         }
         sensorRepository.deleteById(id);
     }
+
+    // --- NOVO MÉTODO PRIVADO PARA CHECAR ALERTAS ---
+
+    /**
+     * Verifica o último valor do sensor contra seus limites e, se necessário,
+     * envia uma mensagem de alerta para o RabbitMQ.
+     * @param sensor O sensor (já salvo) para verificar.
+     */
+    private void checkAndSendAlerts(Sensor sensor) {
+        // Garante que temos valores para comparar
+        if (sensor.getLastValue() == null) {
+            return; // Sem valor, sem alerta.
+        }
+
+        String alertType = null;
+        Double limit = null;
+
+        // 1. Verifica se ultrapassou o MÁXIMO (se o máximo existe)
+        if (sensor.getMaxLimit() != null && sensor.getLastValue() > sensor.getMaxLimit()) {
+            alertType = "ACIMA_MAXIMO";
+            limit = sensor.getMaxLimit();
+        }
+        // 2. Verifica se caiu abaixo do MÍNIMO (se o mínimo existe)
+        else if (sensor.getMinLimit() != null && sensor.getLastValue() < sensor.getMinLimit()) {
+            alertType = "ABAIXO_MINIMO";
+            limit = sensor.getMinLimit();
+        }
+
+        // 3. Se um tipo de alerta foi definido, envia a mensagem
+        if (alertType != null) {
+            SensorAlertDTO alertDTO = new SensorAlertDTO(
+                    sensor.getId(),
+                    sensor.getType(),
+                    sensor.getLastValue(),
+                    limit,
+                    alertType,
+                    LocalDateTime.now()
+            );
+
+            // Envia o DTO para o RabbitMQ
+            // O Spring irá converter o DTO para JSON automaticamente
+            rabbitTemplate.convertAndSend(exchangeName, routingKey, alertDTO);
+
+            // Log para debug no console
+            System.out.println("[SensorService] ALERTA ENVIADO: " + alertDTO.toString());
+        }
+    }
+
 
     // ====== Mapeamento DTO <-> Entity ======
 
