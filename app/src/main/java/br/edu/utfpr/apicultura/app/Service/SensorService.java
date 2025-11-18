@@ -7,10 +7,8 @@ import br.edu.utfpr.apicultura.app.Model.Sensor;
 import br.edu.utfpr.apicultura.app.Repository.SensorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy; // Import necessário
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,9 +23,7 @@ public class SensorService {
 
     // --- ADIÇÕES RABBITMQ ---
 
-    // Adicionado @Lazy para quebrar o ciclo de dependência.
-    // O RabbitTemplate será inicializado apenas no primeiro uso.
-    //@Lazy 
+    // Injeta o template do RabbitMQ
     private final RabbitTemplate rabbitTemplate;
 
     // Injeta os nomes definidos no application.properties
@@ -56,6 +52,7 @@ public class SensorService {
         Sensor sensor = toEntity(dto);
         Sensor savedSensor = sensorRepository.save(sensor); // Salva primeiro
 
+        // ** ADIÇÃO: Verifica os limites após criar **
         checkAndSendAlerts(savedSensor);
 
         return toDTO(savedSensor); // Retorna o DTO do sensor salvo
@@ -83,7 +80,7 @@ public class SensorService {
         Sensor updatedSensor = sensorRepository.save(sensor); // Salva as atualizações
 
         // ** ADIÇÃO: Verifica os limites após atualizar **
-        //checkAndSendAlerts(updatedSensor);
+        checkAndSendAlerts(updatedSensor);
 
         return toDTO(updatedSensor); // Retorna o DTO do sensor atualizado
     }
