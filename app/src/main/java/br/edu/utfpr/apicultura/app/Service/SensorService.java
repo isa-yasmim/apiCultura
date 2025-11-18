@@ -7,6 +7,8 @@ import br.edu.utfpr.apicultura.app.Model.Sensor;
 import br.edu.utfpr.apicultura.app.Repository.SensorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.amqp.core.MessagePostProcessor; // <-- NOVO IMPORT OBRIGATÓRIO AQUI
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -93,7 +95,7 @@ public class SensorService {
         sensorRepository.deleteById(id);
     }
 
-    // --- NOVO MÉTODO PRIVADO PARA CHECAR ALERTAS ---
+    // --- NOVO MÉTODO PRIVADO PARA CHECAR ALERTAS CORRIGIDO ---
 
     /**
      * Verifica o último valor do sensor contra seus limites e, se necessário,
@@ -131,12 +133,19 @@ public class SensorService {
                     LocalDateTime.now()
             );
 
-            // Envia o DTO para o RabbitMQ
-            // O Spring irá converter o DTO para JSON automaticamente
-            rabbitTemplate.convertAndSend(exchangeName, routingKey, alertDTO);
+            // FIX: Cria um processador para adicionar os cabeçalhos de Content-Type
+            // Isso resolve o erro "Unexpected token" no consumidor Node.js.
+            MessagePostProcessor postProcessor = message -> {
+                message.getMessageProperties().setContentType("application/json");
+                message.getMessageProperties().setContentEncoding("UTF-8");
+                return message;
+            };
+
+            // Linha de envio CORRIGIDA: usa o postProcessor
+            rabbitTemplate.convertAndSend(exchangeName, routingKey, alertDTO, postProcessor);
 
             // Log para debug no console
-            System.out.println("[SensorService] ALERTA ENVIADO: " + alertDTO.toString());
+            System.out.println("[SensorService] ALERTA ENVIADO (Content-Type fixo): " + alertDTO.toString());
         }
     }
 
