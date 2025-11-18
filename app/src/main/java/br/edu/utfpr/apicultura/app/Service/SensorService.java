@@ -52,7 +52,6 @@ public class SensorService {
         Sensor sensor = toEntity(dto);
         Sensor savedSensor = sensorRepository.save(sensor); // Salva primeiro
 
-        // ** ADIÇÃO: Verifica os limites após criar **
         checkAndSendAlerts(savedSensor);
 
         return toDTO(savedSensor); // Retorna o DTO do sensor salvo
@@ -80,7 +79,7 @@ public class SensorService {
         Sensor updatedSensor = sensorRepository.save(sensor); // Salva as atualizações
 
         // ** ADIÇÃO: Verifica os limites após atualizar **
-        checkAndSendAlerts(updatedSensor);
+        //checkAndSendAlerts(updatedSensor);
 
         return toDTO(updatedSensor); // Retorna o DTO do sensor atualizado
     }
