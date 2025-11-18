@@ -7,8 +7,10 @@ import br.edu.utfpr.apicultura.app.Model.Sensor;
 import br.edu.utfpr.apicultura.app.Repository.SensorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class SensorService {
     // --- ADIÇÕES RABBITMQ ---
 
     // Injeta o template do RabbitMQ
-    private final RabbitTemplate rabbitTemplate;
+    private final @Lazy RabbitTemplate rabbitTemplate;
 
     // Injeta os nomes definidos no application.properties
     @Value("${rabbitmq.exchange.name}")
