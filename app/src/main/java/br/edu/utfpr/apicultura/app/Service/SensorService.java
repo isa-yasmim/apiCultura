@@ -8,7 +8,6 @@ import br.edu.utfpr.apicultura.app.Repository.SensorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.amqp.core.MessagePostProcessor; // <-- NOVO IMPORT OBRIGATÓRIO AQUI
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -52,12 +51,12 @@ public class SensorService {
     // Criar
     public SensorDTO create(SensorDTO dto) {
         Sensor sensor = toEntity(dto);
-        Sensor savedSensor = sensorRepository.save(sensor); // Salva primeiro
+        Sensor savedSensor = sensorRepository.save(sensor); 
 
-        // ** ADIÇÃO: Verifica os limites após criar **
+        // Verifica os limites após criar
         checkAndSendAlerts(savedSensor);
 
-        return toDTO(savedSensor); // Retorna o DTO do sensor salvo
+        return toDTO(savedSensor); 
     }
 
     // Atualizar
@@ -79,12 +78,12 @@ public class SensorService {
             sensor.setDevice(device);
         }
 
-        Sensor updatedSensor = sensorRepository.save(sensor); // Salva as atualizações
+        Sensor updatedSensor = sensorRepository.save(sensor); 
 
-        // ** ADIÇÃO: Verifica os limites após atualizar **
+        // Verifica os limites após atualizar
         checkAndSendAlerts(updatedSensor);
 
-        return toDTO(updatedSensor); // Retorna o DTO do sensor atualizado
+        return toDTO(updatedSensor); 
     }
 
     // Deletar
@@ -95,7 +94,7 @@ public class SensorService {
         sensorRepository.deleteById(id);
     }
 
-    // --- NOVO MÉTODO PRIVADO PARA CHECAR ALERTAS CORRIGIDO ---
+    // --- MÉTODO PRIVADO PARA CHECAR ALERTAS CORRIGIDO (Versão Final) ---
 
     /**
      * Verifica o último valor do sensor contra seus limites e, se necessário,
@@ -133,19 +132,11 @@ public class SensorService {
                     LocalDateTime.now()
             );
 
-            // FIX: Cria um processador para adicionar os cabeçalhos de Content-Type
-            // Isso resolve o erro "Unexpected token" no consumidor Node.js.
-            MessagePostProcessor postProcessor = message -> {
-                message.getMessageProperties().setContentType("application/json");
-                message.getMessageProperties().setContentEncoding("UTF-8");
-                return message;
-            };
-
-            // Linha de envio CORRIGIDA: usa o postProcessor
-            rabbitTemplate.convertAndSend(exchangeName, routingKey, alertDTO, postProcessor);
+            // A conversão para JSON puro é feita pelo RabbitTemplate configurado no RabbitMQConfig.java
+            rabbitTemplate.convertAndSend(exchangeName, routingKey, alertDTO);
 
             // Log para debug no console
-            System.out.println("[SensorService] ALERTA ENVIADO (Content-Type fixo): " + alertDTO.toString());
+            System.out.println("[SensorService] ALERTA ENVIADO (Via Jackson Converter): " + alertDTO.toString());
         }
     }
 
