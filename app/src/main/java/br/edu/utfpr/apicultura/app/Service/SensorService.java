@@ -26,7 +26,7 @@ public class SensorService {
     // --- ADIÇÕES RABBITMQ ---
 
     // Injeta o template do RabbitMQ
-    private final @Lazy RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     // Injeta os nomes definidos no application.properties
     @Value("${rabbitmq.exchange.name}")
