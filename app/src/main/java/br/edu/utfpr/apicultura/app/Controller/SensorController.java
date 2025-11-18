@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Lazy; // Import necessário
 public class SensorController {
 
     // FIX CRÍTICO: Aplicar @Lazy para quebrar o ciclo de dependência na inicialização do contexto Spring.
-    @Lazy
+    //@Lazy
     private final SensorService sensorService;
 
     // Listagem paginada

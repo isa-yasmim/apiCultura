@@ -27,7 +27,7 @@ public class SensorService {
 
     // Adicionado @Lazy para quebrar o ciclo de dependência.
     // O RabbitTemplate será inicializado apenas no primeiro uso.
-    @Lazy 
+    //@Lazy 
     private final RabbitTemplate rabbitTemplate;
 
     // Injeta os nomes definidos no application.properties
