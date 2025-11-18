@@ -4,12 +4,12 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
-// import org.springframework.amqp.rabbit.core.RabbitTemplate; // Remova esta importação se não for mais criar o bean
+// import org.springframework.amqp.rabbit.core.RabbitTemplate; 
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-// import org.springframework.context.annotation.Lazy; // Remova esta importação
+// import org.springframework.context.annotation.Lazy; 
 
 @Configuration
 public class RabbitMQConfig {

@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Lazy; // Import necessário
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,9 @@ public class SensorService {
 
     // --- ADIÇÕES RABBITMQ ---
 
-    // Injeta o template do RabbitMQ
+    // Adicionado @Lazy para quebrar o ciclo de dependência.
+    // O RabbitTemplate será inicializado apenas no primeiro uso.
+    @Lazy 
     private final RabbitTemplate rabbitTemplate;
 
     // Injeta os nomes definidos no application.properties
