@@ -4,14 +4,16 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory; // Import necessário
-import org.springframework.amqp.rabbit.core.RabbitTemplate; // Import necessário
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+// Adiciona proxyBeanMethods = false para garantir que os beans sejam injetados diretamente, 
+// o que é vital para quebrar ciclos de inicialização complexos.
+@Configuration(proxyBeanMethods = false) 
 public class RabbitMQConfig {
 
     @Value("${rabbitmq.exchange.name}")
@@ -44,9 +46,8 @@ public class RabbitMQConfig {
     }
 
     /**
-     * FIX CRÍTICO: Define o RabbitTemplate explicitamente para quebrar
-     * o ciclo de dependência do Spring Boot AutoConfig.
-     * Injetamos a ConnectionFactory (um bean base) e configuramos o MessageConverter.
+     * FIX DEFINITIVO: Define o RabbitTemplate explicitamente.
+     * Isso substitui a Autoconfiguração do Spring Boot, que estava gerando o ciclo.
      */
     @Bean
     public RabbitTemplate rabbitTemplate(
@@ -55,7 +56,7 @@ public class RabbitMQConfig {
 
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         
-        // Aplica o conversor JSON que o SensorService usa.
+        // Aplica o conversor JSON.
         rabbitTemplate.setMessageConverter(jsonMessageConverter);
         
         return rabbitTemplate;
