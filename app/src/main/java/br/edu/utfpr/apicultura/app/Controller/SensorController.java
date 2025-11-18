@@ -18,15 +18,11 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.context.annotation.Lazy; // Import necessário
-
 @RestController
 @RequestMapping("/sensors")
 @RequiredArgsConstructor
 public class SensorController {
 
-    // FIX CRÍTICO: Aplicar @Lazy para quebrar o ciclo de dependência na inicialização do contexto Spring.
-    //@Lazy
     private final SensorService sensorService;
 
     // Listagem paginada
